@@ -17,18 +17,22 @@ dist/
 .colab/
 
 # Logs & outputs
+# Keep logs and result summaries
 *.log
 logs/
+
+# Ignore large or temporary run data, but keep lightweight results
 output/
-outputs/
-results/
 wandb/
 runs/
-*.csv
-*.json
-*.h5
-*.ckpt
-*.pth
+results/
+
+# Keep experiment summaries
+!outputs/
+!outputs/*.csv
+!outputs/*.json
+!outputs/*.txt
+
 
 # IDEs & OS
 .vscode/
@@ -38,7 +42,7 @@ Thumbs.db
 
 # Data & archives
 data/
-datasets/
+#datasets/
 *.zip
 *.tar
 *.gz
