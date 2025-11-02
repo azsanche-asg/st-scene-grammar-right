@@ -1,32 +1,11 @@
-# ST-SceneGrammar
+# ST-SceneGrammar: Beyond the Radiance — Evaluation Suite
 
+This repository provides a **modular, config-driven** framework to evaluate *Spatio-Temporal Scene Grammars (STSG)*.
+It is designed to be **CVPR-ready** with reproducible experiments, swappable modules, and complete metric reporting.
 
-## 🚀 Installation
+## Quickstart (Synthetic)
+1. Open `notebooks/01_run_synthetic.ipynb` and run all cells.
+2. Inspect outputs in `st_scene_grammar/outputs/` and `st_scene_grammar/figures/`.
+3. Modify `st_scene_grammar/configs/synthetic_demo.yaml` to toggle modules and ablations.
 
-### Option 1 — pip
-```bash
-python -m venv .venv
-source .venv/bin/activate  # (Linux/macOS)
-# or .venv\Scripts\activate  # (Windows)
-pip install -r requirements.txt
-```
-
-### Option 2 — conda
-```bash
-conda env create -f environment.yml
-conda activate st_scene_grammar
-```
-
-### Verify installation
-```bash
-pytest st_scene_grammar/tests/test_basic.py
-jupyter lab
-```
-
----
-
-## 🧩 Recommended Workflow
-
-- Use this repository as your base and sync with **GitHub** for version control.
-- Launch experiments from **Colab** by cloning your GitHub repo.
-- Modify modules interactively using **Codex CLI** for rapid development.
+See `st_scene_grammar/` for package modules.
