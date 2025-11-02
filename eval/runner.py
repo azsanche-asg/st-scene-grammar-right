@@ -1,11 +1,11 @@
 import os, csv, json, time
 from typing import Dict, Any
-from ..utils.misc import ensure_dir, set_seed
-from ..utils.config import cfg_hash
-from ..datasets.synthetic import gen_sequence
-from ..backbones.identity import IdentityBackbone
-from ..policy.heuristic import HeuristicPolicy
-from ..metrics.core import compression_ratio, purity, ade_fde, repeat_accuracy
+from utils.misc import ensure_dir, set_seed
+from utils.config import cfg_hash
+from datasets.synthetic import gen_sequence
+from backbones.identity import IdentityBackbone
+from policy.heuristic import HeuristicPolicy
+from metrics.core import compression_ratio, purity, ade_fde, repeat_accuracy
 
 def run_experiment(cfg: Dict[str, Any], out_dir: str):
     set_seed(cfg.get('seed', 42))
