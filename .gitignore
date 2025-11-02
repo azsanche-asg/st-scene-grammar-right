@@ -1,0 +1,49 @@
+# Python / build / env
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# Jupyter / Colab
+.ipynb_checkpoints/
+*.ipynb_save/
+*.ipynb_convert/
+.colab/
+
+# Logs & outputs
+*.log
+logs/
+output/
+outputs/
+results/
+wandb/
+runs/
+*.csv
+*.json
+*.h5
+*.ckpt
+*.pth
+
+# IDEs & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Data & archives
+data/
+datasets/
+*.zip
+*.tar
+*.gz
+
+# Secrets
+*.env
+*.secret
+*.key

@@ -1,0 +1,18 @@
+seed: 123
+data:
+  name: synthetic
+  params:
+    num_frames: 12
+    width: 256
+    height: 160
+    num_rect: 6
+    dx: 3
+    jitter: 1
+policy:
+  iou_thresh: 0.35
+ablations:
+  no_renderer: true
+  no_stochastic: true
+  feature_variant: identity
+save:
+  out_dir: st_scene_grammar/outputs
