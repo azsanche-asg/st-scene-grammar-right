@@ -1,5 +1,5 @@
 import numpy as np
-from ..utils.viz import draw_rectangles
+from utils.viz import draw_rectangles
 def gen_sequence(num_frames=10, width=256, height=160, num_rect=5, dx=2, jitter=1, save_dir=None):
     frames = []
     base_xs = np.linspace(20, width-40, num_rect).astype(int)
