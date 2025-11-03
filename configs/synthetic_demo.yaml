@@ -8,8 +8,13 @@ data:
     num_rect: 6
     dx: 3
     jitter: 1
+backbone:
+  name: identity
+  params: {}
 policy:
-  iou_thresh: 0.35
+  name: heuristic
+  params:
+    iou_thresh: 0.35
 ablations:
   no_renderer: true
   no_stochastic: true

@@ -1,11 +1,24 @@
 import os, csv, json, time
+from importlib import import_module
 from typing import Dict, Any
 from utils.misc import ensure_dir, set_seed
 from utils.config import cfg_hash
 from datasets.synthetic import gen_sequence
-from backbones.identity import IdentityBackbone
-from policy.heuristic import HeuristicPolicy
 from metrics.core import compression_ratio, purity, ade_fde, repeat_accuracy
+
+
+def build_backbone(cfg):
+    name = cfg['backbone']['name']
+    module = import_module(f'backbones.{name}')
+    cls = getattr(module, f'{name.capitalize()}Backbone')
+    return cls(**cfg['backbone'].get('params', {}))
+
+
+def build_policy(cfg):
+    name = cfg['policy']['name']
+    module = import_module(f'policy.{name}')
+    cls = getattr(module, f'{name.capitalize()}Policy')
+    return cls(**cfg['policy'].get('params', {}))
 
 def run_experiment(cfg: Dict[str, Any], out_dir: str):
     set_seed(cfg.get('seed', 42))
@@ -15,10 +28,10 @@ def run_experiment(cfg: Dict[str, Any], out_dir: str):
         seq = gen_sequence(**cfg['data'].get('params', {}), save_dir=None)
     else:
         raise NotImplementedError("Real datasets are stubbed; use data.name=synthetic for now.")
-    # Backbone (placeholder)
-    _ = IdentityBackbone()
+    # Backbone
+    backbone = build_backbone(cfg)
     # Policy
-    policy = HeuristicPolicy(iou_thresh=cfg['policy'].get('iou_thresh', 0.3))
+    policy = build_policy(cfg)
     grammar = policy.induce(seq)
     # Metrics
     cr = compression_ratio(grammar, seq_len=len(seq['frames']))
