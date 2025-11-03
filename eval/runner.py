@@ -3,7 +3,6 @@ from importlib import import_module
 from typing import Dict, Any
 from utils.misc import ensure_dir, set_seed
 from utils.config import cfg_hash
-from datasets.synthetic import gen_sequence
 from metrics.core import compression_ratio, purity, ade_fde, repeat_accuracy
 
 
@@ -24,10 +23,50 @@ def run_experiment(cfg: Dict[str, Any], out_dir: str):
     set_seed(cfg.get('seed', 42))
     ensure_dir(out_dir)
     # Data
-    if cfg['data']['name'] == 'synthetic':
-        seq = gen_sequence(**cfg['data'].get('params', {}), save_dir=None)
+    data_cfg = cfg.get('data', {})
+    data_name = data_cfg.get('name', 'synthetic')
+    data_params = data_cfg.get('params', {})
+
+    from datasets.synthetic import gen_sequence
+
+    def _gen_synth(custom_params=None):
+        params = custom_params or {}
+        return gen_sequence(**params, save_dir=None)
+
+    seq = None
+    if data_name == 'synthetic':
+        seq = _gen_synth(data_params)
+    elif data_name == 're10k':
+        root = data_params.get('root')
+        if not root or not os.path.isdir(root):
+            print(f"Warning: dataset root '{root}' not found; falling back to synthetic data.")
+            seq = _gen_synth()
+        else:
+            from datasets.real_stubs import RE10KDataset
+
+            dataset = RE10KDataset(**data_params)
+            seq = next(iter(dataset), None)
+            if seq is None:
+                print("Warning: RE10K dataset produced no sequences; falling back to synthetic data.")
+                seq = _gen_synth()
+    elif data_name == 'scannetpp':
+        root = data_params.get('root')
+        if not root or not os.path.isdir(root):
+            print(f"Warning: dataset root '{root}' not found; falling back to synthetic data.")
+            seq = _gen_synth()
+        else:
+            from datasets.real_stubs import ScanNetPPDataset
+
+            dataset = ScanNetPPDataset(**data_params)
+            seq = next(iter(dataset), None)
+            if seq is None:
+                print("Warning: ScanNetPP dataset produced no sequences; falling back to synthetic data.")
+                seq = _gen_synth()
     else:
-        raise NotImplementedError("Real datasets are stubbed; use data.name=synthetic for now.")
+        raise ValueError(f"Unknown dataset: {data_name}")
+
+    if seq is None:
+        seq = _gen_synth()
     # Backbone
     backbone = build_backbone(cfg)
     # Policy

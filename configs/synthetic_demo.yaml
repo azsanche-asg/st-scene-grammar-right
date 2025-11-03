@@ -23,3 +23,11 @@ ablations:
   feature_variant: identity
 save:
   out_dir: outputs
+
+# Example real dataset configuration (uncomment to use):
+# data:
+#   name: re10k        # or 'scannetpp'
+#   params:
+#     root: /path/to/dataset
+#     seq_len: 12
+#     stride: 2
