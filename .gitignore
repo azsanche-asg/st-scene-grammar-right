@@ -28,9 +28,9 @@ runs/
 results/
 
 # Keep experiment summaries
-!outputs/
-!outputs/*.csv
-!outputs/*.json
+outputs/
+outputs/*.csv
+outputs/*.json
 !outputs/*.txt
 
 
