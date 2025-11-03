@@ -20,4 +20,4 @@ ablations:
   no_stochastic: true
   feature_variant: identity
 save:
-  out_dir: st_scene_grammar/outputs
+  out_dir: outputs
