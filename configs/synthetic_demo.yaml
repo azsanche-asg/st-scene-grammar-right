@@ -12,9 +12,11 @@ backbone:
   name: identity
   params: {}
 policy:
-  name: heuristic
+  name: learned
   params:
-    iou_thresh: 0.35
+    scorer: features
+    backbone_name: dino
+    train: false
 ablations:
   no_renderer: true
   no_stochastic: true
